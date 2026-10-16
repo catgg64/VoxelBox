@@ -3,10 +3,10 @@ use crate::{Point};
 #[derive(Debug, Clone)]
 pub struct Atom {
     pub point: Point,
-    pub voxel_id: u16,
+    pub voxel_id: AtomId,
     pub type_id: u8,
     pub bundle: u8,
-    pub connections: Vec<u16>,
+    pub connections: Vec<AtomId>,
 }
 
 impl Atom {
@@ -28,6 +28,10 @@ impl Atom {
                 break;
             }
         }
-        
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct AtomId {
+    pub id: u16,
 }

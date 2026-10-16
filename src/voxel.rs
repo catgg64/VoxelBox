@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::{Point, atom::Atom};
+use crate::{Point, atom::{Atom, AtomId}};
 
 #[derive(Debug)]
 pub struct VoxelGroupPoint {
@@ -11,18 +11,18 @@ pub struct VoxelGroupPoint {
 
 #[derive(Debug)]
 pub struct Voxel {
-    pub atoms: HashMap<u16, Atom>,
+    pub atoms: HashMap<AtomId, Atom>,
     pub id_head: u16,
 }
 
 impl Voxel {
     pub fn add_atom(&mut self, atom: Atom) -> u16 {
-        self.atoms.insert(self.id_head, atom);
+        self.atoms.insert(AtomId{id: self.id_head}, atom);
         self.id_head += 1;
         self.id_head - 1
     }
 
-    pub fn get_atom(&self, id: u16) -> &Atom {
+    pub fn get_atom(&self, id: AtomId) -> &Atom {
         &self.atoms[&id]
     }
 }
