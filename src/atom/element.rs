@@ -1,7 +1,12 @@
 use std::{any::Any, collections::HashMap};
 
-use crate::{atom::element, bundle::BundleId, variable::ElementVariableId};
+use crate::{bundle::BundleId, variable::{ElementVariable, ElementVariableId}};
 
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct BundledElementVariableId {
+    bundle_id: BundleId,
+    element_variable_id: ElementVariableId,
+}
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ElementId {
@@ -10,13 +15,23 @@ pub struct ElementId {
 
 #[derive(Debug)]
 pub struct Element {
-    pub variables: HashMap<(BundleId, ElementVariableId), Box<dyn Any>>
+    variables: HashMap<BundledElementVariableId, Box<dyn Any>>
 }
 
 impl Element {
-    pub fn add_variable(&mut self, bundle_id: BundleId, element_variable_id: ElementVariableId, v: Box<dyn Any>) {
-        self.variables.insert((bundle_id, element_variable_id), v);
+    pub fn new(variables: Vec<(&ElementVariable, BundledElementVariableId, Box<dyn Any>)>) -> Self {
+        let mut output_variables = HashMap::new();
+        for inputv in variables {
+            if inputv.0.typeid == inputv.2.type_id() {
+                output_variables.insert(inputv.1, inputv.2);
+            }
+        }
+        Self {
+            variables: output_variables,
+        }
     }
 
-    pub fn get_variable(&mut self, bundle_id: BundleId, element_variable_id: ElementVariableId) -> 
+    pub fn get_variable(&self, bundled_id: BundledElementVariableId) -> Option<&Box<dyn Any>> {
+        self.variables.get(&bundled_id)
+    }
 }
