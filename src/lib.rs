@@ -1,5 +1,7 @@
 pub mod atom;
 pub mod voxel;
+pub mod bundle;
+pub mod variable;
 
 #[derive(Debug)]
 pub struct VoxelBoxConstants {

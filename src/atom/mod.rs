@@ -1,5 +1,7 @@
 use crate::{Point};
 
+pub mod element;
+
 #[derive(Debug, Clone)]
 pub struct Atom {
     pub point: Point,
