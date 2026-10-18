@@ -1,14 +1,23 @@
-use crate::{Point};
+use std::{any::Any, collections::HashMap};
+
+use crate::{Point, bundle::BundleId, variable::AtomVariableId};
 
 pub mod element;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct BundledAtomVariableId {
+    pub bundle_id: BundleId,
+    pub atom_variable_id: AtomVariableId,
+}
+
+#[derive(Debug)]
 pub struct Atom {
     pub point: Point,
     pub voxel_id: AtomId,
     pub type_id: u8,
     pub bundle: u8,
     pub connections: Vec<AtomId>,
+    pub variables: HashMap<BundledAtomVariableId, Box<dyn Any>>,
 }
 
 impl Atom {
@@ -30,6 +39,14 @@ impl Atom {
                 break;
             }
         }
+    }
+
+    pub fn set_variable(&mut self, id: BundledAtomVariableId, value: Box<dyn Any>) {        
+        self.variables.insert(id, value);
+    }
+
+    pub fn get_variable(&self, v: BundledAtomVariableId) -> Option<&Box<dyn Any>> {
+        self.variables.get(&v)
     }
 }
 
