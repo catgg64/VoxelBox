@@ -1,6 +1,6 @@
 use std::{any::Any, collections::HashMap};
 
-use crate::{Point, bundle::BundleId, variable::AtomVariableId};
+use crate::{Point, bundle::BundleId, variable::{AtomVariable, AtomVariableId}};
 
 pub mod element;
 
@@ -17,7 +17,7 @@ pub struct Atom {
     pub type_id: u8,
     pub bundle: u8,
     pub connections: Vec<AtomId>,
-    pub variables: HashMap<BundledAtomVariableId, Box<dyn Any>>,
+    variables: HashMap<BundledAtomVariableId, Box<dyn Any>>,
 }
 
 impl Atom {
@@ -41,8 +41,10 @@ impl Atom {
         }
     }
 
-    pub fn set_variable(&mut self, id: BundledAtomVariableId, value: Box<dyn Any>) {        
-        self.variables.insert(id, value);
+    pub fn set_variable(&mut self, id: (&AtomVariable, BundledAtomVariableId), value: Box<dyn Any>) {
+        if id.0.typeid == value.type_id() {
+            self.variables.insert(id.1, value);
+        }
     }
 
     pub fn get_variable(&self, v: BundledAtomVariableId) -> Option<&Box<dyn Any>> {
