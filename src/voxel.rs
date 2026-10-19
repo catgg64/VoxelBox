@@ -1,6 +1,6 @@
 use std::{any::Any, collections::HashMap};
 
-use crate::{Point, atom::{Atom, AtomId}, bundle::BundleId, variable::{VoxelGroupVariableId, VoxelVariable, VoxelVariableId}};
+use crate::{Point, atom::{Atom, AtomId}, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}};
 
 #[derive(Debug)]
 pub struct VoxelGroupPoint {
@@ -55,4 +55,16 @@ pub struct VoxelGroup {
     pub voxels: HashMap<VoxelGroupPoint, Voxel>,
     pub position: Point,
     variables: HashMap<BundledVoxelGroupVariableId, Box<dyn Any>>,
+}
+
+impl VoxelGroup {
+    pub fn set_variable(&mut self, id: (&VoxelGroupVariable, BundledVoxelGroupVariableId), value: Box<dyn Any>) {
+        if id.0.typeid == value.type_id() {
+            self.variables.insert(id.1, value);
+        }
+    }
+
+    pub fn get_variable(&self, v: BundledVoxelGroupVariableId) -> Option<&Box<dyn Any>> {
+        self.variables.get(&v)
+    }
 }

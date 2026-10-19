@@ -9,6 +9,25 @@ pub struct ElementVariable {
 pub struct ElementVariableId {
     pub id: u16,
 }
+#[derive(Debug, Clone, Copy)]
+
+pub struct ConnectionTypeVariable {
+    pub typeid: TypeId,
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct ConnectionTypeVariableId {
+    pub id: u16,
+}
+
+pub struct ConnectionVariable {
+    pub typeid: TypeId,
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct ConnectionVariableId {
+    pub id: u16,
+}
 
 #[derive(Debug, Clone, Copy)]
 pub struct AtomVariable {
