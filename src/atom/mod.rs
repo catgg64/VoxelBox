@@ -3,6 +3,7 @@ use std::{any::Any, collections::HashMap};
 use crate::{Point, bundle::BundleId, variable::{AtomVariable, AtomVariableId}};
 
 pub mod element;
+pub mod connection;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct BundledAtomVariableId {

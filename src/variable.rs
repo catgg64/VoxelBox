@@ -11,21 +11,21 @@ pub struct ElementVariableId {
 }
 #[derive(Debug, Clone, Copy)]
 
-pub struct ConnectionTypeVariable {
+pub struct AtomConnectionTypeVariable {
     pub typeid: TypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
-pub struct ConnectionTypeVariableId {
+pub struct AtomConnectionTypeVariableId {
     pub id: u16,
 }
 
-pub struct ConnectionVariable {
+pub struct AtomConnectionVariable {
     pub typeid: TypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
-pub struct ConnectionVariableId {
+pub struct AtomConnectionVariableId {
     pub id: u16,
 }
 
