@@ -21,8 +21,15 @@ pub struct Atom {
 }
 
 impl Atom {
-    pub fn new(point: Point, atom_id: AtomId, type_id: u8, bundle: u8) -> Self {
-        Self { point, atom_id, type_id, bundle, variables: HashMap::new() }
+    pub fn new(point: Point, atom_id: AtomId, type_id: u8, bundle: u8, variables: Vec<(&AtomVariable, BundledAtomVariableId, Box<dyn Any>)>) -> Self {
+        let mut output_variables = HashMap::new();
+        for inputv in variables {
+            if inputv.0.typeid == inputv.2.type_id() {
+                output_variables.insert(inputv.1, inputv.2);
+            }
+        }
+        
+        Self { point, atom_id, type_id, bundle, variables: output_variables }
     }
 
     pub fn set_variable(&mut self, id: (&AtomVariable, BundledAtomVariableId), value: Box<dyn Any>) {

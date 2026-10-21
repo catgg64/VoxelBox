@@ -36,6 +36,17 @@ pub struct Voxel {
 }
 
 impl Voxel {
+    pub fn new(variables: Vec<(&VoxelVariable, BundledVoxelVariableId, Box<dyn Any>)>) -> Self {
+        let mut output_variables = HashMap::new();
+        for inputv in variables {
+            if inputv.0.typeid == inputv.2.type_id() {
+                output_variables.insert(inputv.1, inputv.2);
+            }
+        }
+        
+        Self { atoms: HashMap::new(), id_head: 0, variables: output_variables }
+    }
+
     pub fn add_element(&mut self, element: VoxelElement) -> u16 {
         self.atoms.insert(VoxelElementId{id: self.id_head}, element);
         self.id_head += 1;
@@ -77,6 +88,17 @@ pub struct VoxelGroup {
 }
 
 impl VoxelGroup {
+    pub fn new(voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, position: Point, variables: Vec<(&VoxelGroupVariable, BundledVoxelGroupVariableId, Box<dyn Any>)>) -> Self {
+        let mut output_variables = HashMap::new();
+        for inputv in variables {
+            if inputv.0.typeid == inputv.2.type_id() {
+                output_variables.insert(inputv.1, inputv.2);
+            }
+        }
+        
+        Self { voxels, position, variables: output_variables }
+    }
+
     pub fn set_variable(&mut self, id: (&VoxelGroupVariable, BundledVoxelGroupVariableId), value: Box<dyn Any>) {
         if id.0.typeid == value.type_id() {
             self.variables.insert(id.1, value);

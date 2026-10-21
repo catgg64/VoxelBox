@@ -51,6 +51,17 @@ pub struct AtomConnection {
 
 
 impl AtomConnection {
+    pub fn new(atom_1: AtomId, atom_2: AtomId, connection_type: BundledAtomConnectionTypeVariableId, variables: Vec<(&AtomConnectionVariable, BundledAtomConnectionVariableId, Box<dyn Any>)>) -> Self {
+        let mut output_variables = HashMap::new();
+        for inputv in variables {
+            if inputv.0.typeid == inputv.2.type_id() {
+                output_variables.insert(inputv.1, inputv.2);
+            }
+        }
+        
+        Self { atom_1, atom_2, connection_type, variables: output_variables }
+    }
+
     pub fn set_variable(&mut self, id: (&AtomConnectionVariable, BundledAtomConnectionVariableId), value: Box<dyn Any>) {
         if id.0.typeid == value.type_id() {
             self.variables.insert(id.1, value);

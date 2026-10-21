@@ -51,6 +51,21 @@ pub struct VoxelConnection {
 
 
 impl VoxelConnection {
+    pub fn new(voxel_1: VoxelGroupPoint, voxel_2: VoxelGroupPoint, connection_type: BundledVoxelConnectionTypeVariableId, variables: Vec<(&VoxelConnectionVariable, BundledVoxelConnectionVariableId, Box<dyn Any>)>) -> Self {
+        let mut output_variables = HashMap::new();
+        for inputv in variables {
+            if inputv.0.typeid == inputv.2.type_id() {
+                output_variables.insert(inputv.1, inputv.2);
+            }
+        }
+        Self {
+            voxel_1,
+            voxel_2,
+            connection_type,
+            variables: output_variables,
+        }
+    }
+
     pub fn set_variable(&mut self, id: (&VoxelConnectionVariable, BundledVoxelConnectionVariableId), value: Box<dyn Any>) {
         if id.0.typeid == value.type_id() {
             self.variables.insert(id.1, value);
