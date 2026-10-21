@@ -15,26 +15,32 @@ pub struct BundledVoxelVariableId {
     pub atom_variable_id: VoxelVariableId,
 }
 
+#[derive(Debug)]
 pub enum VoxelElement {
     Atom(Atom),
-    Connection(AtomConnection)
+    Connection(AtomConnection),
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct VoxelElementId {
+    pub id: u16
 }
 
 #[derive(Debug)]
 pub struct Voxel {
-    pub atoms: HashMap<AtomId, Atom>,
+    pub atoms: HashMap<VoxelElementId, VoxelElement>,
     pub id_head: u16,
     variables: HashMap<BundledVoxelVariableId, Box<dyn Any>>,
 }
 
 impl Voxel {
-    pub fn add_atom(&mut self, atom: Atom) -> u16 {
-        self.atoms.insert(AtomId{id: self.id_head}, atom);
+    pub fn add_element(&mut self, element: VoxelElement) -> u16 {
+        self.atoms.insert(VoxelElementId{id: self.id_head}, element);
         self.id_head += 1;
         self.id_head - 1
     }
 
-    pub fn get_atom(&self, id: AtomId) -> &Atom {
+    pub fn get_element(&self, id: VoxelElementId) -> &VoxelElement {
         &self.atoms[&id]
     }
 

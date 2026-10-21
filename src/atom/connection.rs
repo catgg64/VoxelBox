@@ -41,6 +41,7 @@ pub struct BundledAtomConnectionVariableId {
     pub atom_variable_id: AtomConnectionVariableId,
 }
 
+#[derive(Debug)]
 pub struct AtomConnection {
     pub atom_1: AtomId,
     pub atom_2: AtomId,
