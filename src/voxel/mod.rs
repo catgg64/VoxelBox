@@ -1,6 +1,8 @@
 use std::{any::Any, collections::HashMap};
 
-use crate::{Point, atom::{Atom, AtomId, connection::AtomConnection}, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}};
+use crate::{Point, atom::{Atom, connection::AtomConnection}, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}, voxel::connection::VoxelConnection};
+
+pub mod connection;
 
 #[derive(Debug)]
 pub struct VoxelGroupPoint {
@@ -62,8 +64,14 @@ pub struct BundledVoxelGroupVariableId {
     pub atom_variable_id: VoxelGroupVariableId,
 }
 
+#[derive(Debug)]
+pub enum VoxelGroupElement {
+    Voxel(Voxel),
+    Connection(VoxelConnection),
+}
+
 pub struct VoxelGroup {
-    pub voxels: HashMap<VoxelGroupPoint, Voxel>,
+    pub voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, 
     pub position: Point,
     variables: HashMap<BundledVoxelGroupVariableId, Box<dyn Any>>,
 }
