@@ -76,3 +76,21 @@ pub struct VoxelGroupVariable {
 pub struct VoxelGroupVariableId {
     pub id: u16,
 }
+
+pub struct VoxelGroupConnectionTypeVariable {
+    pub typeid: TypeId,
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct VoxelGroupConnectionTypeVariableId {
+    pub id: u16,
+}
+
+pub struct VoxelGroupConnectionVariable {
+    pub typeid: TypeId,
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct VoxelGroupConnectionVariableId {
+    pub id: u16,
+}
