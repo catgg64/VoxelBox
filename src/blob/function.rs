@@ -1,5 +1,5 @@
-use std::any::Any;
+use crate::blob::BlobType;
 
 pub struct Function {
-    pub input: Blob
+    pub input: Vec<BlobType>,
 }
