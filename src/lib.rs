@@ -4,6 +4,7 @@ pub mod atom;
 pub mod voxel;
 pub mod bundle;
 pub mod variable;
+pub mod blob;
 
 #[derive(Debug)]
 pub struct VoxelBoxConstants {
