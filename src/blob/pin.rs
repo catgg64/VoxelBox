@@ -16,7 +16,7 @@ impl<T> PinBoard<T> {
         Self { pins }
     }
 
-    pub fn get_value(&self, pin: Pin) -> &Option<T> {
+    pub fn get_value(&self, pin: &Pin) -> &Option<T> {
         &self.pins[pin.id]
     }
 

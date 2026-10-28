@@ -1,4 +1,4 @@
-use crate::{blob::BlobType, config::ConfigScript};
+use crate::config::ConfigScript;
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct FunctionId {
@@ -6,7 +6,5 @@ pub struct FunctionId {
 }
 
 pub struct Function {
-    pub input: Option<Vec<BlobType>>,
-    pub output: Option<BlobType>,
     pub script: ConfigScript,
 }
