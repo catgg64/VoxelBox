@@ -5,6 +5,7 @@ pub mod voxel;
 pub mod bundle;
 pub mod variable;
 pub mod blob;
+pub mod config;
 
 #[derive(Debug)]
 pub struct VoxelBoxConstants {
