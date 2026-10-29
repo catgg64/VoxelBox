@@ -5,29 +5,37 @@ pub struct Pin {
     pub id: usize,
 }
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct PinBoard<T> {
-    pins: Vec<Option<T>>,
+    values: Vec<Option<T>>,
 }
 
 impl<T> PinBoard<T> {
     pub fn new() -> Self {
-        let pins = vec![];
+        let values = vec![];
         
-        Self { pins }
+        Self { values }
     }
 
     pub fn get_value(&self, pin: &Pin) -> &Option<T> {
-        &self.pins[pin.id]
+        &self.values[pin.id]
     }
 
     pub fn get_mut_value(&mut self, pin: &Pin) -> &mut Option<T> {
-        &mut self.pins[pin.id]
+        &mut self.values[pin.id]
     }
 
 
     pub fn set_value(&mut self, pin: Pin, value: Option<T>) {
-        self.pins[pin.id] =  value;
+        self.values[pin.id] =  value;
+    }
+
+    pub fn take(&mut self) -> Self {
+        let mut values = vec![];
+        for v in &mut self.values {
+            values.push(v.take());
+        }
+        Self { values }
     }
 }
 
@@ -49,6 +57,10 @@ impl<T> InfinitePinBoard<T> {
 
     pub fn get_value(&self, pin: &Pin) -> &Option<T> {
         &self.pins[pin]
+    }
+
+    pub fn get_mut_value(&mut self, pin: &Pin) -> &mut Option<T> {
+        self.pins.get_mut(pin).unwrap()
     }
 
     pub fn set_value(&mut self, pin: Pin, value: Option<T>) {
