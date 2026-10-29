@@ -5,7 +5,6 @@ pub struct FunctionId {
     pub id: usize,
 }
 
-#[derive(Clone)]
 pub struct Function {
     pub script: ConfigScript,
 }

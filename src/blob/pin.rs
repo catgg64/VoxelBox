@@ -1,11 +1,12 @@
 use std::collections::HashMap;
 
+use crate::blob::Blob;
+
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Pin {
     pub id: usize,
 }
 
-#[derive(Debug, Clone)]
 pub struct PinBoard<T> {
     values: Vec<Option<T>>,
 }
@@ -17,11 +18,21 @@ impl<T> PinBoard<T> {
         Self { values }
     }
 
-    pub fn get_value(&self, pin: &Pin) -> &Option<T> {
+    pub fn take_from_board(input_board: &mut PinBoard<Pin>, board: &mut InfinitePinBoard<T>) -> Self {
+        let mut values = vec![];
+        for v in &input_board.values {
+            if let Some(v) = v {
+                values.push(board.take_value(&v));
+            }
+        }
+        Self { values }
+    }
+
+    pub fn get_value(&self, pin: Pin) -> &Option<T> {
         &self.values[pin.id]
     }
 
-    pub fn get_mut_value(&mut self, pin: &Pin) -> &mut Option<T> {
+    pub fn get_mut_value(&mut self, pin: Pin) -> &mut Option<T> {
         &mut self.values[pin.id]
     }
 
@@ -39,6 +50,11 @@ impl<T> PinBoard<T> {
     }
 }
 
+impl<T: Clone> Clone for PinBoard<T> {
+    fn clone(&self) -> Self {
+        Self { values: self.values.clone() }
+    }
+}
 
 pub struct InfinitePinBoard<T> {
     pins: HashMap<Pin, Option<T>>,
