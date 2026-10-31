@@ -5,6 +5,7 @@ use crate::blob::{function::{Function, FunctionId}, pin::PinBoard};
 pub mod pin;
 pub mod function;
 
+#[derive(Serialize, Deserialize)]
 pub struct BlobType {
     pub type_params: PinBoard<Arc<BundledBlobTypeId>>,
     pub functions: HashMap<FunctionId, Function>,

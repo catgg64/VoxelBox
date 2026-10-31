@@ -1,4 +1,4 @@
-use std::{any::Any, collections::HashMap};
+use std::{collections::HashMap};
 
 use crate::{Point, atom::{Atom, connection::AtomConnection}, blob::Blob, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}, voxel::connection::VoxelConnection};
 

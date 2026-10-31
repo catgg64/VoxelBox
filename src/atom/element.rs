@@ -1,19 +1,21 @@
 use std::{collections::HashMap, sync::Arc};
 
+use serde::{Deserialize, Serialize};
+
 use crate::{blob::BundledBlobTypeId, bundle::BundleId, variable::{ElementVariable, ElementVariableId}};
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct BundledElementVariableId {
     bundle_id: BundleId,
     element_variable_id: ElementVariableId,
 }
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct ElementId {
     pub id: u16,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Element {
     variables: HashMap<BundledElementVariableId, Arc<BundledBlobTypeId>>
 }

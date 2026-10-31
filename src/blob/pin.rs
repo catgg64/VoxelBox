@@ -1,10 +1,13 @@
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct Pin {
     pub id: usize,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct PinBoard<T> {
     values: Vec<Option<T>>,
 }
@@ -54,6 +57,7 @@ impl<T: Clone> Clone for PinBoard<T> {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct InfinitePinBoard<T> {
     pins: HashMap<Pin, Option<T>>,
 }
