@@ -28,7 +28,7 @@ pub fn interpret(script: &ConfigScript, pin_board: &mut InfinitePinBoard<Blob>, 
                 return pin_board.take_value(a).take()
             }
             FOP(f, pi, i, po) => {
-                let mut values_taken = PinBoard::take_from_board(&mut i.clone(), pin_board);
+                let mut values_taken = PinBoard::take_from_board(&i, pin_board);
                 let got_value = pin_board.get_value(&pi);
                 if let Some(got_value) = got_value {
                     if let Some(func) = got_value.blob_type.functions.get(&f) {

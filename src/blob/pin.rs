@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::blob::Blob;
-
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Pin {
     pub id: usize,
@@ -18,7 +16,7 @@ impl<T> PinBoard<T> {
         Self { values }
     }
 
-    pub fn take_from_board(input_board: &mut PinBoard<Pin>, board: &mut InfinitePinBoard<T>) -> Self {
+    pub fn take_from_board(input_board: &PinBoard<Pin>, board: &mut InfinitePinBoard<T>) -> Self {
         let mut values = vec![];
         for v in &input_board.values {
             if let Some(v) = v {

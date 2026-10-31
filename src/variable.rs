@@ -1,6 +1,5 @@
 use std::any::TypeId;
 
-#[derive(Debug, Clone, Copy)]
 pub struct ElementVariable {
     pub typeid: TypeId,
 }
@@ -9,7 +8,6 @@ pub struct ElementVariable {
 pub struct ElementVariableId {
     pub id: u16,
 }
-#[derive(Debug, Clone, Copy)]
 
 pub struct AtomConnectionTypeVariable {
     pub typeid: TypeId,
@@ -29,7 +27,6 @@ pub struct AtomConnectionVariableId {
     pub id: u16,
 }
 
-#[derive(Debug, Clone, Copy)]
 pub struct AtomVariable {
     pub typeid: TypeId,
 }
@@ -39,7 +36,6 @@ pub struct AtomVariableId {
     pub id: u16,
 }
 
-#[derive(Debug, Clone, Copy)]
 pub struct VoxelVariable {
     pub typeid: TypeId,
 }
@@ -67,7 +63,6 @@ pub struct VoxelConnectionVariableId {
     pub id: u16,
 }
 
-#[derive(Debug, Clone, Copy)]
 pub struct VoxelGroupVariable {
     pub typeid: TypeId,
 }
