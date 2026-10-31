@@ -77,11 +77,11 @@ pub enum VoxelGroupElement {
 pub struct VoxelGroup {
     pub voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, 
     pub position: Point,
-    variables: HashMap<BundledVoxelGroupVariableId, Box<dyn Any>>,
+    variables: HashMap<BundledVoxelGroupVariableId, Blob>,
 }
 
 impl VoxelGroup {
-    pub fn new(voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, position: Point, variables: Vec<(&VoxelGroupVariable, BundledVoxelGroupVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, position: Point, variables: Vec<(&VoxelGroupVariable, BundledVoxelGroupVariableId, Blob)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -90,11 +90,11 @@ impl VoxelGroup {
         Self { voxels, position, variables: output_variables }
     }
 
-    pub fn set_variable(&mut self, id: (&VoxelGroupVariable, BundledVoxelGroupVariableId), value: Box<dyn Any>) {
+    pub fn set_variable(&mut self, id: (&VoxelGroupVariable, BundledVoxelGroupVariableId), value: Blob) {
         self.variables.insert(id.1, value);
     }
 
-    pub fn get_variable(&self, v: BundledVoxelGroupVariableId) -> Option<&Box<dyn Any>> {
+    pub fn get_variable(&self, v: BundledVoxelGroupVariableId) -> Option<&Blob> {
         self.variables.get(&v)
     }
 }

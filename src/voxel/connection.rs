@@ -1,6 +1,6 @@
-use std::{any::Any, collections::HashMap};
+use std::{collections::HashMap, sync::Arc};
 
-use crate::{bundle::BundleId, variable::{VoxelConnectionTypeVariable, VoxelConnectionVariable, VoxelConnectionVariableId, VoxelGroupConnectionTypeVariable, VoxelGroupConnectionVariable, VoxelGroupConnectionVariableId}, voxel::VoxelGroupPoint};
+use crate::{blob::{Blob, BundledBlobTypeId}, bundle::BundleId, variable::{VoxelConnectionTypeVariable, VoxelConnectionVariable, VoxelConnectionVariableId, VoxelGroupConnectionTypeVariable, VoxelGroupConnectionVariable, VoxelGroupConnectionVariableId}, voxel::VoxelGroupPoint};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct BundledVoxelConnectionTypeVariableId {
@@ -14,11 +14,11 @@ pub struct VoxelConnectionTypeId {
 }
 
 pub struct VoxelConnectionType {
-    variables: HashMap<BundledVoxelConnectionTypeVariableId, Box<dyn Any>>
+    variables: HashMap<BundledVoxelConnectionTypeVariableId, Arc<BundledBlobTypeId>>
 }
 
 impl VoxelConnectionType {
-    pub fn new(variables: Vec<(&VoxelConnectionTypeVariable, BundledVoxelConnectionTypeVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(variables: Vec<(&VoxelConnectionTypeVariable, BundledVoxelConnectionTypeVariableId, Arc<BundledBlobTypeId>)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -28,7 +28,7 @@ impl VoxelConnectionType {
         }
     }
 
-    pub fn get_variable(&self, bundled_id: BundledVoxelConnectionTypeVariableId) -> Option<&Box<dyn Any>> {
+    pub fn get_variable(&self, bundled_id: BundledVoxelConnectionTypeVariableId) -> Option<&Arc<BundledBlobTypeId>> {
         self.variables.get(&bundled_id)
     }
 }
@@ -39,17 +39,16 @@ pub struct BundledVoxelConnectionVariableId {
     pub voxel_variable_id: VoxelConnectionVariableId,
 }
 
-#[derive(Debug)]
 pub struct VoxelConnection {
     pub voxel_1: VoxelGroupPoint,
     pub voxel_2: VoxelGroupPoint,
     pub connection_type: BundledVoxelConnectionTypeVariableId,
-    variables: HashMap<BundledVoxelConnectionVariableId, Box<dyn Any>>,
+    variables: HashMap<BundledVoxelConnectionVariableId, Blob>,
 }
 
 
 impl VoxelConnection {
-    pub fn new(voxel_1: VoxelGroupPoint, voxel_2: VoxelGroupPoint, connection_type: BundledVoxelConnectionTypeVariableId, variables: Vec<(&VoxelConnectionVariable, BundledVoxelConnectionVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(voxel_1: VoxelGroupPoint, voxel_2: VoxelGroupPoint, connection_type: BundledVoxelConnectionTypeVariableId, variables: Vec<(&VoxelConnectionVariable, BundledVoxelConnectionVariableId, Blob)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -62,11 +61,11 @@ impl VoxelConnection {
         }
     }
 
-    pub fn set_variable(&mut self, id: (&VoxelConnectionVariable, BundledVoxelConnectionVariableId), value: Box<dyn Any>) {
+    pub fn set_variable(&mut self, id: (&VoxelConnectionVariable, BundledVoxelConnectionVariableId), value: Blob) {
         self.variables.insert(id.1, value);
     }
 
-    pub fn get_variable(&self, v: BundledVoxelConnectionVariableId) -> Option<&Box<dyn Any>> {
+    pub fn get_variable(&self, v: BundledVoxelConnectionVariableId) -> Option<&Blob> {
         self.variables.get(&v)
     }
 }
@@ -84,11 +83,11 @@ pub struct VoxelGroupConnectionTypeId {
 }
 
 pub struct VoxelGroupConnectionType {
-    variables: HashMap<BundledVoxelGroupConnectionTypeVariableId, Box<dyn Any>>
+    variables: HashMap<BundledVoxelGroupConnectionTypeVariableId, Arc<BundledBlobTypeId>>
 }
 
 impl VoxelGroupConnectionType {
-    pub fn new(variables: Vec<(&VoxelGroupConnectionTypeVariable, BundledVoxelGroupConnectionTypeVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(variables: Vec<(&VoxelGroupConnectionTypeVariable, BundledVoxelGroupConnectionTypeVariableId, Arc<BundledBlobTypeId>)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -98,7 +97,7 @@ impl VoxelGroupConnectionType {
         }
     }
 
-    pub fn get_variable(&self, bundled_id: BundledVoxelGroupConnectionTypeVariableId) -> Option<&Box<dyn Any>> {
+    pub fn get_variable(&self, bundled_id: BundledVoxelGroupConnectionTypeVariableId) -> Option<&Arc<BundledBlobTypeId>> {
         self.variables.get(&bundled_id)
     }
 }
@@ -109,16 +108,15 @@ pub struct BundledVoxelGroupConnectionVariableId {
     pub voxel_group_variable_id: VoxelGroupConnectionVariableId,
 }
 
-#[derive(Debug)]
 pub struct VoxelGroupConnection {
     pub voxel_1: VoxelGroupPoint,
     pub voxel_2: VoxelGroupPoint,
     pub connection_type: BundledVoxelGroupConnectionTypeVariableId,
-    variables: HashMap<BundledVoxelGroupConnectionVariableId, Box<dyn Any>>,
+    variables: HashMap<BundledVoxelGroupConnectionVariableId, Blob>,
 }
 
 impl VoxelGroupConnection {
-    pub fn new(voxel_1: VoxelGroupPoint, voxel_2: VoxelGroupPoint, connection_type: BundledVoxelGroupConnectionTypeVariableId, variables: Vec<(&VoxelGroupConnectionVariable, BundledVoxelGroupConnectionVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(voxel_1: VoxelGroupPoint, voxel_2: VoxelGroupPoint, connection_type: BundledVoxelGroupConnectionTypeVariableId, variables: Vec<(&VoxelGroupConnectionVariable, BundledVoxelGroupConnectionVariableId, Blob)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -131,11 +129,11 @@ impl VoxelGroupConnection {
         }
     }
 
-    pub fn set_variable(&mut self, id: (&VoxelGroupConnectionVariable, BundledVoxelGroupConnectionVariableId), value: Box<dyn Any>) {
+    pub fn set_variable(&mut self, id: (&VoxelGroupConnectionVariable, BundledVoxelGroupConnectionVariableId), value: Blob) {
         self.variables.insert(id.1, value);
     }
 
-    pub fn get_variable(&self, v: BundledVoxelGroupConnectionVariableId) -> Option<&Box<dyn Any>> {
+    pub fn get_variable(&self, v: BundledVoxelGroupConnectionVariableId) -> Option<&Blob> {
         self.variables.get(&v)
     }
 }

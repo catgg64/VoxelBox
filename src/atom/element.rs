@@ -1,6 +1,6 @@
-use std::{any::Any, collections::HashMap};
+use std::{collections::HashMap, sync::Arc};
 
-use crate::{bundle::BundleId, variable::{ElementVariable, ElementVariableId}};
+use crate::{blob::BundledBlobTypeId, bundle::BundleId, variable::{ElementVariable, ElementVariableId}};
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct BundledElementVariableId {
@@ -15,11 +15,11 @@ pub struct ElementId {
 
 #[derive(Debug)]
 pub struct Element {
-    variables: HashMap<BundledElementVariableId, Box<dyn Any>>
+    variables: HashMap<BundledElementVariableId, Arc<BundledBlobTypeId>>
 }
 
 impl Element {
-    pub fn new(variables: Vec<(&ElementVariable, BundledElementVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(variables: Vec<(&ElementVariable, BundledElementVariableId, Arc<BundledBlobTypeId>)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -29,7 +29,7 @@ impl Element {
         }
     }
 
-    pub fn get_variable(&self, bundled_id: BundledElementVariableId) -> Option<&Box<dyn Any>> {
-        self.variables.get(&bundled_id)
+    pub fn get_variable(&self, bundled_id: BundledElementVariableId) -> Option<Arc<BundledBlobTypeId>> {
+        self.variables.get(&bundled_id).cloned()
     }
 }

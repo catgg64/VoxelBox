@@ -1,4 +1,4 @@
-use std::{any::Any, collections::HashMap};
+use std::{collections::HashMap};
 
 use crate::{Point, blob::Blob, bundle::BundleId, variable::{AtomVariable, AtomVariableId}};
 

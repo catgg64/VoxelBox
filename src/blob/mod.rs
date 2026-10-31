@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, sync::Arc};
 
 use crate::blob::{function::{Function, FunctionId}, pin::PinBoard};
 
@@ -6,7 +6,7 @@ pub mod pin;
 pub mod function;
 
 pub struct BlobType {
-    pub type_params: PinBoard<BlobType>,
+    pub type_params: PinBoard<Arc<BundledBlobTypeId>>,
     pub functions: HashMap<FunctionId, Function>,
 }
 
