@@ -22,9 +22,7 @@ impl Element {
     pub fn new(variables: Vec<(&ElementVariable, BundledElementVariableId, Box<dyn Any>)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
-            if inputv.0.typeid == inputv.2.type_id() {
-                output_variables.insert(inputv.1, inputv.2);
-            }
+            output_variables.insert(inputv.1, inputv.2);
         }
         Self {
             variables: output_variables,

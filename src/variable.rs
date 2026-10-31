@@ -1,7 +1,7 @@
-use std::any::TypeId;
+use crate::blob::BundledBlobTypeId;
 
 pub struct ElementVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -10,7 +10,7 @@ pub struct ElementVariableId {
 }
 
 pub struct AtomConnectionTypeVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -19,7 +19,7 @@ pub struct AtomConnectionTypeVariableId {
 }
 
 pub struct AtomConnectionVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -28,7 +28,7 @@ pub struct AtomConnectionVariableId {
 }
 
 pub struct AtomVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -37,7 +37,7 @@ pub struct AtomVariableId {
 }
 
 pub struct VoxelVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -46,7 +46,7 @@ pub struct VoxelVariableId {
 }
 
 pub struct VoxelConnectionTypeVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -55,7 +55,7 @@ pub struct VoxelConnectionTypeVariableId {
 }
 
 pub struct VoxelConnectionVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -64,7 +64,7 @@ pub struct VoxelConnectionVariableId {
 }
 
 pub struct VoxelGroupVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -73,7 +73,7 @@ pub struct VoxelGroupVariableId {
 }
 
 pub struct VoxelGroupConnectionTypeVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
@@ -82,7 +82,7 @@ pub struct VoxelGroupConnectionTypeVariableId {
 }
 
 pub struct VoxelGroupConnectionVariable {
-    pub typeid: TypeId,
+    pub typeid: BundledBlobTypeId,
 }
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]

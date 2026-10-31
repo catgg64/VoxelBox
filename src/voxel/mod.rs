@@ -1,6 +1,6 @@
 use std::{any::Any, collections::HashMap};
 
-use crate::{Point, atom::{Atom, connection::AtomConnection}, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}, voxel::connection::VoxelConnection};
+use crate::{Point, atom::{Atom, connection::AtomConnection}, blob::Blob, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}, voxel::connection::VoxelConnection};
 
 pub mod connection;
 
@@ -17,7 +17,6 @@ pub struct BundledVoxelVariableId {
     pub atom_variable_id: VoxelVariableId,
 }
 
-#[derive(Debug)]
 pub enum VoxelElement {
     Atom(Atom),
     Connection(AtomConnection),
@@ -28,20 +27,17 @@ pub struct VoxelElementId {
     pub id: u16
 }
 
-#[derive(Debug)]
 pub struct Voxel {
     pub atoms: HashMap<VoxelElementId, VoxelElement>,
     pub id_head: u16,
-    variables: HashMap<BundledVoxelVariableId, Box<dyn Any>>,
+    variables: HashMap<BundledVoxelVariableId, Blob>,
 }
 
 impl Voxel {
-    pub fn new(variables: Vec<(&VoxelVariable, BundledVoxelVariableId, Box<dyn Any>)>) -> Self {
+    pub fn new(variables: Vec<(&VoxelVariable, BundledVoxelVariableId, Blob)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
-            if inputv.0.typeid == inputv.2.type_id() {
-                output_variables.insert(inputv.1, inputv.2);
-            }
+            output_variables.insert(inputv.1, inputv.2);
         }
         
         Self { atoms: HashMap::new(), id_head: 0, variables: output_variables }
@@ -57,13 +53,11 @@ impl Voxel {
         &self.atoms[&id]
     }
 
-    pub fn set_variable(&mut self, id: (&VoxelVariable, BundledVoxelVariableId), value: Box<dyn Any>) {
-        if id.0.typeid == value.type_id() {
-            self.variables.insert(id.1, value);
-        }
+    pub fn set_variable(&mut self, id: (&VoxelVariable, BundledVoxelVariableId), value: Blob) {
+        self.variables.insert(id.1, value);
     }
 
-    pub fn get_variable(&self, v: BundledVoxelVariableId) -> Option<&Box<dyn Any>> {
+    pub fn get_variable(&self, v: BundledVoxelVariableId) -> Option<&Blob> {
         self.variables.get(&v)
     }
 }
@@ -75,7 +69,6 @@ pub struct BundledVoxelGroupVariableId {
     pub atom_variable_id: VoxelGroupVariableId,
 }
 
-#[derive(Debug)]
 pub enum VoxelGroupElement {
     Voxel(Voxel),
     Connection(VoxelConnection),
@@ -91,18 +84,14 @@ impl VoxelGroup {
     pub fn new(voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, position: Point, variables: Vec<(&VoxelGroupVariable, BundledVoxelGroupVariableId, Box<dyn Any>)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
-            if inputv.0.typeid == inputv.2.type_id() {
-                output_variables.insert(inputv.1, inputv.2);
-            }
+            output_variables.insert(inputv.1, inputv.2);
         }
         
         Self { voxels, position, variables: output_variables }
     }
 
     pub fn set_variable(&mut self, id: (&VoxelGroupVariable, BundledVoxelGroupVariableId), value: Box<dyn Any>) {
-        if id.0.typeid == value.type_id() {
-            self.variables.insert(id.1, value);
-        }
+        self.variables.insert(id.1, value);
     }
 
     pub fn get_variable(&self, v: BundledVoxelGroupVariableId) -> Option<&Box<dyn Any>> {
