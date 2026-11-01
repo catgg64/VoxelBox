@@ -1,18 +1,21 @@
 use std::{collections::HashMap, sync::Arc};
 
+use serde::{Deserialize, Serialize};
+
 use crate::{atom::AtomId, blob::Blob, bundle::BundleId, variable::{AtomConnectionTypeVariable, AtomConnectionVariable, AtomConnectionVariableId}};
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledAtomConnectionTypeVariableId {
     pub bundle_id: BundleId,
     pub atom_variable_id: AtomConnectionVariableId,
 }
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct AtomConnectionTypeId {
     pub id: u16,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct AtomConnectionType {
     variables: HashMap<BundledAtomConnectionTypeVariableId, Arc<Blob>>
 }
@@ -33,12 +36,13 @@ impl AtomConnectionType {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledAtomConnectionVariableId {
     pub bundle_id: BundleId,
     pub atom_variable_id: AtomConnectionVariableId,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct AtomConnection {
     pub atom_1: AtomId,
     pub atom_2: AtomId,

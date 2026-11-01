@@ -1,16 +1,19 @@
 use std::{collections::HashMap};
 
+use serde::{Deserialize, Serialize};
+
 use crate::{Point, blob::Blob, bundle::BundleId, variable::{AtomVariable, AtomVariableId}};
 
 pub mod element;
 pub mod connection;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledAtomVariableId {
     pub bundle_id: BundleId,
     pub atom_variable_id: AtomVariableId,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct Atom {
     pub point: Point,
     pub atom_id: AtomId,
@@ -38,7 +41,7 @@ impl Atom {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct AtomId {
     pub id: u16,
 }

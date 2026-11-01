@@ -1,32 +1,36 @@
 use std::{collections::HashMap};
 
+use serde::{Deserialize, Serialize};
+
 use crate::{Point, atom::{Atom, connection::AtomConnection}, blob::Blob, bundle::BundleId, variable::{VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}, voxel::connection::VoxelConnection};
 
 pub mod connection;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct VoxelGroupPoint {
     pub x: f64,
     pub y: f64,
     pub z: f64,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledVoxelVariableId {
     pub bundle_id: BundleId,
     pub atom_variable_id: VoxelVariableId,
 }
 
+#[derive(Serialize, Deserialize)]
 pub enum VoxelElement {
     Atom(Atom),
     Connection(AtomConnection),
 }
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct VoxelElementId {
     pub id: u16
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct Voxel {
     pub atoms: HashMap<VoxelElementId, VoxelElement>,
     pub id_head: u16,
@@ -63,12 +67,13 @@ impl Voxel {
 }
 
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledVoxelGroupVariableId {
     pub bundle_id: BundleId,
     pub atom_variable_id: VoxelGroupVariableId,
 }
 
+#[derive(Serialize, Deserialize)]
 pub enum VoxelGroupElement {
     Voxel(Voxel),
     Connection(VoxelConnection),

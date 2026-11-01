@@ -1,18 +1,21 @@
 use std::{collections::HashMap, sync::Arc};
 
+use serde::{Deserialize, Serialize};
+
 use crate::{blob::{Blob, BundledBlobTypeId}, bundle::BundleId, variable::{VoxelConnectionTypeVariable, VoxelConnectionVariable, VoxelConnectionVariableId, VoxelGroupConnectionTypeVariable, VoxelGroupConnectionVariable, VoxelGroupConnectionVariableId}, voxel::VoxelGroupPoint};
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledVoxelConnectionTypeVariableId {
     pub bundle_id: BundleId,
     pub voxel_variable_id: VoxelConnectionVariableId,
 }
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct VoxelConnectionTypeId {
     pub id: u16,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct VoxelConnectionType {
     variables: HashMap<BundledVoxelConnectionTypeVariableId, Arc<BundledBlobTypeId>>
 }
@@ -33,19 +36,19 @@ impl VoxelConnectionType {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledVoxelConnectionVariableId {
     pub bundle_id: BundleId,
     pub voxel_variable_id: VoxelConnectionVariableId,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct VoxelConnection {
     pub voxel_1: VoxelGroupPoint,
     pub voxel_2: VoxelGroupPoint,
     pub connection_type: BundledVoxelConnectionTypeVariableId,
     variables: HashMap<BundledVoxelConnectionVariableId, Blob>,
 }
-
 
 impl VoxelConnection {
     pub fn new(voxel_1: VoxelGroupPoint, voxel_2: VoxelGroupPoint, connection_type: BundledVoxelConnectionTypeVariableId, variables: Vec<(&VoxelConnectionVariable, BundledVoxelConnectionVariableId, Blob)>) -> Self {
@@ -70,18 +73,18 @@ impl VoxelConnection {
     }
 }
 
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledVoxelGroupConnectionTypeVariableId {
     pub bundle_id: BundleId,
     pub voxel_variable_id: VoxelGroupConnectionVariableId,
 }
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct VoxelGroupConnectionTypeId {
     pub id: u16,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct VoxelGroupConnectionType {
     variables: HashMap<BundledVoxelGroupConnectionTypeVariableId, Arc<BundledBlobTypeId>>
 }
@@ -102,12 +105,13 @@ impl VoxelGroupConnectionType {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledVoxelGroupConnectionVariableId {
     pub bundle_id: BundleId,
     pub voxel_group_variable_id: VoxelGroupConnectionVariableId,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct VoxelGroupConnection {
     pub voxel_1: VoxelGroupPoint,
     pub voxel_2: VoxelGroupPoint,
