@@ -24,25 +24,5 @@ pub struct Bundle {
 impl Bundle {
     pub fn from_json(file: &str) -> Result<Self, &str> {
         serde_json::from_str(file).unwrap()
-        //serde_json::from_str(file).expect("failed to parse")
-        // let elements = HashMap::new();
-        // let element_variables = HashMap::new();
-        // let atom_variables = HashMap::new();
-        // let atom_connection_types = HashMap::new();
-        // let atom_connection_type_variables = HashMap::new();
-        // let atom_connection_variables = HashMap::new();
-        // let voxel_variables = HashMap::new();
-        // let voxel_group_variables = HashMap::new();
-        // if let Ok(v) = serde_json::from_reader::<File, Value>(json) {
-        //     match v {
-        //         Value::Object(v) => {
-        //             for object in v {
-                        
-        //             }
-        //         }
-        //         _ => {return Err("poorly structured json")}
-        //     }
-        // }
-        // Ok(Self { elements, element_variables, atom_variables, atom_connection_types, atom_connection_type_variables, atom_connection_variables, voxel_variables, voxel_group_variables })
     }
 }

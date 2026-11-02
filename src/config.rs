@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{blob::{Blob, function::FunctionId, pin::{InfinitePinBoard, Pin, PinBoard}}, config::ConfigInstruction::{FOP, FOR, JMP, MOV, MVI}};
+use crate::{blob::{Blob, function::{Function, FunctionId}, pin::{InfinitePinBoard, Pin, PinBoard}}, config::ConfigInstruction::{FOP, FOR, JMP, MOV, MVI}};
 
 #[derive(Serialize, Deserialize)]
 pub enum ConfigInstruction {
@@ -47,4 +47,8 @@ pub fn interpret(script: &ConfigScript, pin_board: &mut InfinitePinBoard<Blob>, 
         current_line += 1;
     }
     return None;
+}
+
+pub fn rustify_dot_pin(code: &str) -> (ConfigScript, Vec<Blob>) {
+    
 }
