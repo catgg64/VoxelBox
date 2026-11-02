@@ -17,11 +17,11 @@ pub struct AtomConnectionTypeId {
 
 #[derive(Serialize, Deserialize)]
 pub struct AtomConnectionType {
-    variables: HashMap<BundledAtomConnectionTypeVariableId, Arc<Blob>>
+    variables: HashMap<BundledAtomConnectionTypeVariableId, Blob>
 }
 
 impl AtomConnectionType {
-    pub fn new(variables: Vec<(&AtomConnectionTypeVariable, BundledAtomConnectionTypeVariableId, Arc<Blob>)>) -> Self {
+    pub fn new(variables: Vec<(&AtomConnectionTypeVariable, BundledAtomConnectionTypeVariableId, Blob)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -31,7 +31,7 @@ impl AtomConnectionType {
         }
     }
 
-    pub fn get_variable(&self, bundled_id: BundledAtomConnectionTypeVariableId) -> Option<&Arc<Blob>> {
+    pub fn get_variable(&self, bundled_id: BundledAtomConnectionTypeVariableId) -> Option<&Blob> {
         self.variables.get(&bundled_id)
     }
 }

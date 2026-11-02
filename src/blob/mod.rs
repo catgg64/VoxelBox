@@ -9,7 +9,7 @@ pub mod function;
 
 #[derive(Serialize, Deserialize)]
 pub struct BlobType {
-    pub type_params: PinBoard<Arc<BundledBlobTypeId>>,
+    pub type_params: PinBoard<BundledBlobTypeId>,
     pub functions: HashMap<FunctionId, Function>,
 }
 

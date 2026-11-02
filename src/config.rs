@@ -1,5 +1,8 @@
+use serde::{Deserialize, Serialize};
+
 use crate::{blob::{Blob, function::FunctionId, pin::{InfinitePinBoard, Pin, PinBoard}}, config::ConfigInstruction::{FOP, FOR, JMP, MOV, MVI}};
 
+#[derive(Serialize, Deserialize)]
 pub enum ConfigInstruction {
     MOV(Pin, Pin), //Set pin x to pin y
     MVI(Pin, Pin), //Set pin x to input pin y
@@ -8,6 +11,7 @@ pub enum ConfigInstruction {
     JMP(usize),
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct ConfigScript {
     pub script: Vec<ConfigInstruction>,
 }

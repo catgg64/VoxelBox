@@ -6,11 +6,11 @@ use crate::{Point, atom::{Atom, connection::AtomConnection}, blob::Blob, bundle:
 
 pub mod connection;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct VoxelGroupPoint {
-    pub x: f64,
-    pub y: f64,
-    pub z: f64,
+    pub x: i32,
+    pub y: i32,
+    pub z: i32,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
@@ -79,6 +79,7 @@ pub enum VoxelGroupElement {
     Connection(VoxelConnection),
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct VoxelGroup {
     pub voxels: HashMap<VoxelGroupPoint, VoxelGroupElement>, 
     pub position: Point,

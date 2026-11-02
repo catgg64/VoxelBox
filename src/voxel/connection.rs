@@ -17,11 +17,11 @@ pub struct VoxelConnectionTypeId {
 
 #[derive(Serialize, Deserialize)]
 pub struct VoxelConnectionType {
-    variables: HashMap<BundledVoxelConnectionTypeVariableId, Arc<BundledBlobTypeId>>
+    variables: HashMap<BundledVoxelConnectionTypeVariableId, BundledBlobTypeId>
 }
 
 impl VoxelConnectionType {
-    pub fn new(variables: Vec<(&VoxelConnectionTypeVariable, BundledVoxelConnectionTypeVariableId, Arc<BundledBlobTypeId>)>) -> Self {
+    pub fn new(variables: Vec<(&VoxelConnectionTypeVariable, BundledVoxelConnectionTypeVariableId, BundledBlobTypeId)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -31,7 +31,7 @@ impl VoxelConnectionType {
         }
     }
 
-    pub fn get_variable(&self, bundled_id: BundledVoxelConnectionTypeVariableId) -> Option<&Arc<BundledBlobTypeId>> {
+    pub fn get_variable(&self, bundled_id: BundledVoxelConnectionTypeVariableId) -> Option<&BundledBlobTypeId> {
         self.variables.get(&bundled_id)
     }
 }
@@ -86,11 +86,11 @@ pub struct VoxelGroupConnectionTypeId {
 
 #[derive(Serialize, Deserialize)]
 pub struct VoxelGroupConnectionType {
-    variables: HashMap<BundledVoxelGroupConnectionTypeVariableId, Arc<BundledBlobTypeId>>
+    variables: HashMap<BundledVoxelGroupConnectionTypeVariableId, BundledBlobTypeId>
 }
 
 impl VoxelGroupConnectionType {
-    pub fn new(variables: Vec<(&VoxelGroupConnectionTypeVariable, BundledVoxelGroupConnectionTypeVariableId, Arc<BundledBlobTypeId>)>) -> Self {
+    pub fn new(variables: Vec<(&VoxelGroupConnectionTypeVariable, BundledVoxelGroupConnectionTypeVariableId, BundledBlobTypeId)>) -> Self {
         let mut output_variables = HashMap::new();
         for inputv in variables {
             output_variables.insert(inputv.1, inputv.2);
@@ -100,7 +100,7 @@ impl VoxelGroupConnectionType {
         }
     }
 
-    pub fn get_variable(&self, bundled_id: BundledVoxelGroupConnectionTypeVariableId) -> Option<&Arc<BundledBlobTypeId>> {
+    pub fn get_variable(&self, bundled_id: BundledVoxelGroupConnectionTypeVariableId) -> Option<&BundledBlobTypeId> {
         self.variables.get(&bundled_id)
     }
 }

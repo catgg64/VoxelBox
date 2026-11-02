@@ -1,12 +1,14 @@
 use std::{collections::HashMap};
+use serde::{Deserialize, Serialize};
+
 use crate::{atom::{connection::{AtomConnectionType, AtomConnectionTypeId}, element::{Element, ElementId}}, blob::{BlobType, BlobTypeId}, variable::{AtomConnectionTypeVariable, AtomConnectionTypeVariableId, AtomConnectionVariable, AtomConnectionVariableId, AtomVariable, AtomVariableId, ElementVariable, ElementVariableId, VoxelGroupVariable, VoxelGroupVariableId, VoxelVariable, VoxelVariableId}};
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct BundleId {
     pub id: u16,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Bundle {
     pub elements: HashMap<ElementId, Element>,
     pub element_variables: HashMap<ElementVariableId, ElementVariable>,
@@ -17,15 +19,6 @@ pub struct Bundle {
     pub voxel_variables: HashMap<VoxelVariableId, VoxelVariable>,
     pub voxel_group_variables: HashMap<VoxelGroupVariableId, VoxelGroupVariable>,
     pub blob_types: HashMap<BlobTypeId, BlobType>,
-}
-
-impl serde::de::Deserialize<'a> for Bundle {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'a>
-    {
-        D.
-    }
 }
 
 impl Bundle {

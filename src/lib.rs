@@ -9,7 +9,7 @@ pub mod variable;
 pub mod blob;
 pub mod config;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct VoxelBoxConstants {
     pub disconnected_voxels_rip_from_voxel_group: bool,
     pub processed_voxel_group_depth_check: bool,
@@ -28,11 +28,13 @@ pub struct ChunkElementId {
     pub id: u16,
 }
 
+#[derive(Serialize, Deserialize)]
 pub enum ChunkElement {
     VoxelGroup(crate::voxel::VoxelGroup),
     Connection(crate::voxel::connection::VoxelGroupConnection)
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct Chunk {
     chunk_elements: HashMap<ChunkElementId, ChunkElement>,
     id_head: u16
@@ -54,6 +56,7 @@ impl Chunk {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct World {
 
 }
