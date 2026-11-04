@@ -19,7 +19,7 @@ impl<T> PinBoard<T> {
         Self { values }
     }
 
-    pub fn take_from_board(input_board: &PinBoard<Pin>, board: &mut InfinitePinBoard<T>) -> Self {
+    pub fn take_from_board(input_board: &PinBoard<Pin>, board: &mut PinHeap<T>) -> Self {
         let mut values = vec![];
         for v in &input_board.values {
             if let Some(v) = v {
@@ -58,11 +58,11 @@ impl<T: Clone> Clone for PinBoard<T> {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct InfinitePinBoard<T> {
+pub struct PinHeap<T> {
     pins: HashMap<Pin, Option<T>>,
 }
 
-impl<T> InfinitePinBoard<T> {
+impl<T> PinHeap<T> {
     pub fn new() -> Self {
         let pins = HashMap::new();
         

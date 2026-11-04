@@ -18,6 +18,7 @@ pub struct Bundle {
     pub atom_connection_variables: HashMap<AtomConnectionVariableId, AtomConnectionVariable>,
     pub voxel_variables: HashMap<VoxelVariableId, VoxelVariable>,
     pub voxel_group_variables: HashMap<VoxelGroupVariableId, VoxelGroupVariable>,
+    //pub dependencies: HashMap<>
     pub blob_types: HashMap<BlobTypeId, BlobType>,
 }
 
@@ -25,4 +26,8 @@ impl Bundle {
     pub fn from_json(file: &str) -> Result<Self, &str> {
         serde_json::from_str(file).unwrap()
     }
+}
+
+pub struct BundleProgram {
+    pub bundles: HashMap<BundleId, Bundle>,
 }
