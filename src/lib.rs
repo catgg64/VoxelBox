@@ -8,7 +8,6 @@ pub mod bundle;
 pub mod variable;
 pub mod blob;
 pub mod config;
-pub mod constructs;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct VoxelBoxConstants {

@@ -1,8 +1,8 @@
-use std::{collections::HashMap};
+use std::{any::Any, collections::HashMap};
 
 use serde::{Deserialize, Serialize};
 
-use crate::{blob::{function::{Function, FunctionId}, pin::PinBoard}, bundle::BundleId};
+use crate::{blob::{function::{Function, FunctionId}, pin::PinBoard}, bundle::{BundleContext, BundleId, RelativeBundleId}};
 
 pub mod pin;
 pub mod function;
@@ -20,12 +20,13 @@ pub struct BlobTypeId {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct BundledBlobTypeId {
-    pub bundle_id: BundleId,
+    pub relative_bundle_id: RelativeBundleId,
+    pub context: &BundleContext,
     pub blob_type_id: BlobTypeId,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct Blob {
     pub blob_type: BundledBlobTypeId,
-    pub params: PinBoard<Blob>,
+    pub params: PinBoard<serde_json::Value>,
 }

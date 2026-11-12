@@ -5,7 +5,7 @@ use crate::{atom::{connection::{AtomConnectionType, AtomConnectionTypeId}, eleme
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct BundleId {
-    pub id: u16,
+    pub id: u64,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -18,7 +18,6 @@ pub struct Bundle {
     pub atom_connection_variables: HashMap<AtomConnectionVariableId, AtomConnectionVariable>,
     pub voxel_variables: HashMap<VoxelVariableId, VoxelVariable>,
     pub voxel_group_variables: HashMap<VoxelGroupVariableId, VoxelGroupVariable>,
-    //pub dependencies: HashMap<>
     pub blob_types: HashMap<BlobTypeId, BlobType>,
 }
 
@@ -30,4 +29,20 @@ impl Bundle {
 
 pub struct BundleProgram {
     pub bundles: HashMap<BundleId, Bundle>,
+    pub contexes: HashMap<BundleContextId, BundleContext>
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+pub struct RelativeBundleId {
+    pub id: u16,
+}
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+pub struct BundleContextId {
+    pub id: u16,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct BundleContext {
+    pub context: HashMap<RelativeBundleId, BundleId>,
 }
